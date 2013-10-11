@@ -19,7 +19,7 @@ func main() {
 		Connections: make(map[*amqpcast.Connection]bool),
 		Create:      make(chan *amqpcast.Connection),
 		Destroy:     make(chan *amqpcast.Connection),
-		Outbound:    make(chan string),
+		Outbound:    make(chan string, 256),
 	}
 
 	amqpcast.InitHttp(&cstr)
