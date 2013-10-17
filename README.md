@@ -1,4 +1,13 @@
-Listen to AMQP messages and send them to websockets clients.
+This server listens to a routing key on an AMQP exchange and broadcasts all
+messages received to currently connected WebSocket clients.
+
+It can be used as plumbing to shove data into a queue and get it into users'
+browsers.
+
+The server starts an example page but you could create a WebSocket connection
+to the server from your own page.
+
+Assuming you have RabbitMQ installed and listening on localhost:5672:
 
 ```sh
 go install
