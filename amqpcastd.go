@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"log"
 
 	"github.com/mmb/amqpcast"
 )
@@ -26,20 +25,5 @@ func main() {
 	amqpcast.InitHttp(httpListen, &cstr)
 	amqpcast.InitAmqp(amqpUrl, amqpExchange, amqpKey, &cstr)
 
-	for {
-		select {
-		case c := <-cstr.Create:
-			log.Printf("new client")
-			cstr.Connections[c] = true
-		case c := <-cstr.Destroy:
-			log.Printf("client closed")
-			delete(cstr.Connections, c)
-			c.Ws.Close()
-			close(c.Outbound)
-		case m := <-cstr.Outbound:
-			for c, _ := range cstr.Connections {
-				c.Outbound <- m
-			}
-		}
-	}
+	cstr.Run()
 }
