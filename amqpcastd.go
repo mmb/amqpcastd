@@ -15,15 +15,10 @@ func main() {
 
 	flag.Parse()
 
-	var cstr = amqpcast.Caster{
-		Connections: make(map[*amqpcast.Connection]bool),
-		Create:      make(chan *amqpcast.Connection),
-		Destroy:     make(chan *amqpcast.Connection),
-		Outbound:    make(chan string, 256),
-	}
+	cstr := amqpcast.NewCaster()
 
-	amqpcast.InitHttp(httpListen, &cstr)
-	amqpcast.InitAmqp(amqpUrl, amqpExchange, amqpKey, &cstr)
+	amqpcast.InitHttp(httpListen, cstr)
+	amqpcast.InitAmqp(amqpUrl, amqpExchange, amqpKey, cstr)
 
 	cstr.Run()
 }
