@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/mmb/amqpcast"
+	"github.com/mmb/amqpcastd/amqpcast"
 )
 
 func main() {
